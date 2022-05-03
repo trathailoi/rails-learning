@@ -7,3 +7,8 @@ pre-commit:
       files: git diff --name-only --staged
       glob: "*.rb"
       run: rubocop -a --force-exclusion {files}
+post-merge:
+  parallel: true
+  commands:
+    db-migrate:
+      run: rails db:migrate
