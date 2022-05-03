@@ -10,3 +10,4 @@ AllCops:
     - <%= path.sub(/^!! /, '') %>
   <% end %>
     - bin/bundle
+  NewCops: enable
