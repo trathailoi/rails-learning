@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+  database:
+    image: postgres
+    env_file:
+      - .env
+    volumes:
+      # - ./.docker/volumes/database:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
+  web:
+    build: .
+    env_file:
+      - .env
+    volumes:
+      - ./:/ror
+    ports:
+      - "${RAILS_PORT-3000}:${RAILS_PORT-3000}"
+    depends_on:
+      - database
+
+volumes:
+  postgres_data:
