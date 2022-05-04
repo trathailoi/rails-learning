@@ -7,6 +7,8 @@
   "emmet.showSuggestionsAsSnippets": true,
   "cSpell.words": [
     "Cyclomatic",
-    "rubocop"
+    "rubocop",
+    "stylesheet",
+    "trix"
   ]
 }

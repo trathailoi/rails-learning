@@ -10,5 +10,6 @@ AllCops:
     - <%= path.sub(/^!! /, '') %>
     <% end %>
     - bin/bundle
+    - db/migrate/*
     - db/*
   NewCops: enable
