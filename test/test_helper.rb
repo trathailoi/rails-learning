@@ -1,3 +1,17 @@
+require 'dotenv/load'
+require 'simplecov'
+# SimpleCov.command_name "Test: #{rand(1024)}"
+# p ENV.fetch('COVERAGE', nil)
+if ENV.fetch('COVERAGE', nil) == 'true'
+  SimpleCov.start 'rails' do
+    # track_files '**/*.rb'
+    add_filter '/bin/'
+    add_filter '/db/'
+    add_filter '/spec/' # for rspec
+    add_filter '/test/' # for minitest
+  end
+end
+
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 require 'rails/test_help'

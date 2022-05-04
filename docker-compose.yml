@@ -4,9 +4,11 @@ services:
     image: postgres
     env_file:
       - .env
+    ports:
+      - "${POSTGRES_PORT-5432}:5432"
     volumes:
-      # - ./.docker/volumes/database:/var/lib/postgresql/data
-      - postgres_data:/var/lib/postgresql/data
+      - database-dev-vol:/var/lib/postgresql/data
+
   web:
     build: .
     env_file:
@@ -19,4 +21,9 @@ services:
       - database
 
 volumes:
-  postgres_data:
+  database-dev-vol:
+
+networks:
+  default:
+    name: rails-dev-net
+    driver: bridge
