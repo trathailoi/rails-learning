@@ -3,8 +3,12 @@
 all: start-dev
 
 preps:
-	test -f .env || cp .env.example .env
-	docker-compose up -d database
+	test -f .env.local || cp .env.development .env.development.local
+	docker-compose --env-file .env.development.local up -d database
+
+preps-test:
+	test -f .env.test.local || cp .env.test .env.test.local
+	docker-compose --env-file .env.test.local -f docker-compose.test.yml up -d database-test
 
 start-dev:
 	make preps
@@ -14,24 +18,27 @@ start-dev:
 
 start-dev-docker:
 	make preps
-	(docker-compose up -d --build) && (docker-compose logs -f web) || (docker-compose down)
+	(docker-compose --env-file .env.development.local up -d --build) && (docker-compose logs -f web) || (docker-compose down)
 
 clean:
 	docker-compose down -v
 
 unit-test:
-	make preps
-	echo "Running Unit Tests..."
+	make preps-test
+	@echo "Running Unit Tests..."
 	rails test
-	echo "Running Unit Tests DONE!"
+	@echo "Running Unit Tests DONE!"
+	make clean-test
 
 unit-test-docker:
-	make preps
-	echo "Running Unit Tests..."
-	docker-compose -f docker-compose.test.yml up -d --build
+	make preps-test
+	@echo "Running Unit Tests..."
+	docker-compose --env-file .env.test.local -f docker-compose.test.yml up -d --build
 	docker-compose -f docker-compose.test.yml logs -f web-test
-	echo "Running Unit Tests DONE!"
-	docker-compose -f docker-compose.test.yml down -v
+	@echo "Running Unit Tests DONE!"
+	make clean-test
 
-clean-test-docker:
+clean-test:
+	@echo "Cleanup Unit Tests DB..."
 	docker-compose -f docker-compose.test.yml down -v
+	@echo "Cleanup Unit Tests DB DONE!"

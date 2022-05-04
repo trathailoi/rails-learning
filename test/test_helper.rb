@@ -1,7 +1,10 @@
 require 'dotenv/load'
+# Dotenv.load('../.env.test.local', '../.env.test')
+Dotenv.overload '.env.test'
+Dotenv.overload '.env.test.local'
 require 'simplecov'
 # SimpleCov.command_name "Test: #{rand(1024)}"
-# p ENV.fetch('COVERAGE', nil)
+# p ENV.fetch('POSTGRES_DB', nil)
 if ENV.fetch('COVERAGE', nil) == 'true'
   SimpleCov.start 'rails' do
     # track_files '**/*.rb'

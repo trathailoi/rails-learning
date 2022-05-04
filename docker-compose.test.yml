@@ -3,17 +3,19 @@ services:
   database-test:
     image: postgres
     env_file:
-      - .env
+      - .env.test.local
     environment:
       - POSTGRES_HOST=database-test
       - POSTGRES_DB=rails_learning_test
+    ports:
+      - "${POSTGRES_PORT-5433}:5432"
     volumes:
       - database-test-vol:/var/lib/postgresql/data
   web-test:
     build: .
     hostname: web-rails
     env_file:
-      - .env
+      - .env.test.local
     environment:
       - POSTGRES_HOST=database-test
       - POSTGRES_DB=rails_learning_test
