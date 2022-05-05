@@ -3,7 +3,7 @@
 all: start-dev
 
 preps:
-	test -f .env.local || cp .env.development .env.development.local
+	test -f .env.development.local || cp .env.development .env.development.local
 	docker-compose --env-file .env.development.local up -d database
 
 preps-test:

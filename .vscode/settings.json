@@ -1,4 +1,5 @@
 {
+  "ruby.intellisense": "rubyLocate",
   "solargraph.diagnostics": true,
   "emmet.includeLanguages": {
     "erb": "html"
