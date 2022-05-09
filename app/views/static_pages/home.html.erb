@@ -1,2 +1,24 @@
 <h1>StaticPages#home</h1>
 <p>Find me in app/views/static_pages/home.html.erb</p>
+
+<% if @active_sessions.present? %> 
+  <h2>Current Logins</h2>
+  <% if @active_sessions.any? %>
+    <%= button_to "Log out of all other sessions", destroy_all_active_sessions_path, method: :delete %>
+    <table>
+      <thead>
+        <tr>
+          <th>User Agent</th>
+          <th>IP Address</th>
+          <th>Signed In At</th>
+          <th>Sign Out</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render @active_sessions %>
+      </tbody>
+    </table>
+  <% end %>
+<% else %>
+  <a href="<%= login_path %>">Log in to see active sessions </a>
+<% end %>
